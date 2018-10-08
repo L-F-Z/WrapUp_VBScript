@@ -10,7 +10,7 @@ Dim choice
 choice = msgbox("Yes = Backup    No = FinalWrap    Cancel = Exit", vbYesNoCancel, "Wrap Script by LFZ")
 select case choice
     case 6
-		Backup()
+        Backup()
     case 7
         FinalWrap()
     case Else
@@ -23,12 +23,12 @@ Function FinalWrap()
     ID = InputBox("Please Enter Your ID: ", "Get ID", "2016K80099XXXXX")
     LAB = InputBox("Please Enter Lab ID: ", "Get Lab ID", "lab1_")
     PRJ = InputBox("Please Enter Project Name: ", "Get Project Name", "mycpu_prj1")
-	'IF YOU DO NOT WANT TO ENTER THEM EVERY TIME, JUST USE THE FOLLOWING INSTRUCTIONS
-	'ID = "2016K80099XXXXX"
-	'LAB = "lab1_"
-	'PRJ = "mycpu_prj1"
-	
-	Dim DIR,ReportFile, WrapDir, FileName
+    'IF YOU DO NOT WANT TO ENTER THEM EVERY TIME, JUST USE THE FOLLOWING INSTRUCTIONS
+    'ID = "2016K80099XXXXX"
+    'LAB = "lab1_"
+    'PRJ = "mycpu_prj1"
+    
+    Dim DIR,ReportFile, WrapDir, FileName
     DIR = GetCurrentFolder()
     CreateFolder DIR&"\ZipFolderTmp"
     CreateFolder DIR&"\ZipFolderTmp\"&LAB&ID
@@ -61,39 +61,39 @@ Function Backup()
     Dim LAB, PRJ
     LAB = InputBox("Please Enter Lab ID: ", "Get Lab ID", "lab1-")
     PRJ = InputBox("Please Enter Project Name: ", "Get Project Name", "mycpu_prj1")
-	'IF YOU DO NOT WANT TO ENTER THEM EVERY TIME, JUST USE THE FOLLOWING INSTRUCTIONS
-	'LAB = "lab1_"
-	'PRJ = "mycpu_prj1"
+    'IF YOU DO NOT WANT TO ENTER THEM EVERY TIME, JUST USE THE FOLLOWING INSTRUCTIONS
+    'LAB = "lab1_"
+    'PRJ = "mycpu_prj1"
     
     Dim DIR,strFolder1, strFolder2, FileName, CurrentTime, LogMessage, LogFile
-	CurrentTime = Year(Now)&"-"&Month(Now)&"-"&Day(Now)&"-"& Hour(Now)&"-"&Minute(Now)&"-"&Second(Now)
-	LogMessage  = InputBox("Please Input Your Log Text") 
+    CurrentTime = Year(Now)&"-"&Month(Now)&"-"&Day(Now)&"-"& Hour(Now)&"-"&Minute(Now)&"-"&Second(Now)
+    LogMessage  = InputBox("Please Input Your Log Text") 
     DIR = GetCurrentFolder()  
-	
+    
     CreateFolder DIR&"\ZipFolderTmp"
     CreateFolder DIR&"\ZipFolderTmp\"&LAB&CurrentTime
     
-	set LogFile = fso.CreateTextFile(DIR&"\ZipFolderTmp\"&LAB&CurrentTime&"\BackupLog-"&CurrentTime&".txt", true)
+    set LogFile = fso.CreateTextFile(DIR&"\ZipFolderTmp\"&LAB&CurrentTime&"\BackupLog-"&CurrentTime&".txt", true)
     LogFile.WriteLine(CurrentTime)
     LogFile.WriteBlankLines(1)
-	LogFile.WriteLine(LogMessage)
+    LogFile.WriteLine(LogMessage)
     LogFile.Close()
-	
+    
     CreateFolder DIR&"\ZipFolderTmp\"&LAB&CurrentTime&"\mycpu_verify"
     CreateFolder DIR&"\ZipFolderTmp\"&LAB&CurrentTime&"\mycpu_verify\rtl"
     CopyFolder   DIR&"\mycpu_verify\rtl", DIR&"\ZipFolderTmp\"&LAB&CurrentTime&"\mycpu_verify\rtl"
     CreateFolder DIR&"\ZipFolderTmp\"&LAB&CurrentTime&"\mycpu_verify\testbench"
     CopyFolder   DIR&"\mycpu_verify\testbench", DIR&"\ZipFolderTmp\"&LAB&CurrentTime&"\mycpu_verify\testbench"
     
-	If fso.FolderExists(DIR & "\PRJ_BACKUP")=False Then         
+    If fso.FolderExists(DIR & "\PRJ_BACKUP")=False Then         
         CreateFolder DIR&"\PRJ_BACKUP"
     End If
     
     CreateZip    DIR&"\ZipFolderTmp", DIR&"\"&LAB&CurrentTime&".zip"
     wScript.Sleep 5000
-	CopyFile     DIR&"\"&LAB&CurrentTime&".zip", DIR&"\PRJ_BACKUP"
+    CopyFile     DIR&"\"&LAB&CurrentTime&".zip", DIR&"\PRJ_BACKUP"
     DeleteFolder DIR & "\ZipFolderTmp"
-	DeleteFile   DIR&"\"&LAB&CurrentTime&".zip"
+    DeleteFile   DIR&"\"&LAB&CurrentTime&".zip"
     WScript.Quit
 End Function
 
@@ -128,7 +128,7 @@ Function CopyFolder(srcFolder, dstFolder)
         If Err.Number<>0 Then Err.Clear
     Next
     For Each subfolder In subFolders
-		CreateFolder(dstFolder & "\" & subFolder.Name)
+        CreateFolder(dstFolder & "\" & subFolder.Name)
         call CopyFolder(subFolder.Path, dstFolder & "\" & subFolder.Name)
     Next
 End Function
@@ -140,15 +140,15 @@ End Function
 
 Function GetCurrentFolder()
     Dim CurrentFile
-	CurrentFile = wscript.scriptfullname
-	GetCurrentFolder = left(wscript.scriptfullname,instrrev(CurrentFile,"\")-1)
+    CurrentFile = wscript.scriptfullname
+    GetCurrentFolder = left(wscript.scriptfullname,instrrev(CurrentFile,"\")-1)
 End Function
 
 Function SelectFile()
     Dim FilePath
     Set wShell=CreateObject("WScript.Shell")
     Set oExec=wShell.Exec("mshta.exe ""about:<input type=file id=FILE><script>FILE.click();new ActiveXObject('Scripting.FileSystemObject').GetStandardStream(1).WriteLine(FILE.value);close();resizeTo(0,0);</script>""")
-	FilePath = CStr(oExec.StdOut.ReadAll)
+    FilePath = CStr(oExec.StdOut.ReadAll)
     SelectFile = Left(FilePath,Len(FilePath)-2)
 End Function
 
