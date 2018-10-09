@@ -5,6 +5,23 @@
 ' $Ver     0.9(20181008)
 ' $Src     https://github.com/L-F-Z/WrapUp_VBScript
 
+'|-lab#_2016K80099XXXXX/
+'| |--lab#_2016K80099XXXX.pdf/
+'| |-mycpu_verify/
+'| | |--rtl/
+'| | | |--soc_lite_top.v
+'| | | |--myCPU /
+'| | | |--CONFREG/
+'| | | |--BRIDGE/
+'| | | |--xilinx_ip/
+'| | |--testbench/
+'| | | |--mycpu_tb.v
+'| | |--run_vivado/
+'| | | |--soc_lite.xdc
+'| | | |--mycpu/
+'| | | | |--mycpu.xpr
+'| | | | |--mycpu.bit
+
 Set fso = CreateObject("Scripting.FileSystemObject")
 Dim choice
 choice = msgbox("Yes = Backup    No = FinalWrap    Cancel = Exit", vbYesNoCancel, "Wrap Script by LFZ")
